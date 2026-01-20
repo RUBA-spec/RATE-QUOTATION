@@ -1,14 +1,28 @@
 let db;
 
 // Auto Date & Bill Number
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("billDate").innerText =
-        new Date().toLocaleDateString("en-GB");
+// document.addEventListener("DOMContentLoaded", () => {
+//     document.getElementById("billDate").innerText =
+//         new Date().toLocaleDateString("en-GB");
 
-    document.getElementById("billNo").innerText =
-        "QTN-" + Date.now();
+//     document.getElementById("billNo").innerText =
+//         "QTN-" + Date.now();
 
-    initDB();
+//     initDB();
+// });
+document.addEventListener("DOMContentLoaded", function () {
+    const dateEl = document.getElementById("billDate");
+    const noEl = document.getElementById("billNo");
+
+    if (dateEl && noEl) {
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString("en-GB");
+
+        dateEl.innerText = formattedDate;
+        noEl.innerText = "QTN-" + today.getTime();
+    } else {
+        console.error("billDate or billNo element not found");
+    }
 });
 
 // Add Row

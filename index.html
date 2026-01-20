@@ -89,10 +89,24 @@
     </div>
 
 </div>
+<script>
+    window.onload = function () {
+      var dateSpan = document.getElementById("billDate");
+      var noSpan = document.getElementById("billNo");
+  
+      if (!dateSpan || !noSpan) {
+        alert("billDate or billNo not found in HTML");
+        return;
+      }
+  
+      var now = new Date();
+      dateSpan.innerText = now.toLocaleDateString("en-GB");
+      noSpan.innerText = "QTN-" + now.getTime();
+    };
+  </script>
 
-<script src="app.js"></script>
 </body>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -178,5 +192,5 @@
 </div>
 
 <script src="app.js"></script>
-</body>
+</body> -->
 </html>
