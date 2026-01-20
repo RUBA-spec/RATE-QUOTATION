@@ -6,7 +6,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+    <script>
+        if (localStorage.getItem("auth") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
 <div class="bill">
 
     <h3 class="title">RATE QUOTATION</h3>
@@ -72,7 +76,6 @@
         
         
         
-        <button onclick="window.location.href='bills.html'">Previous bills</button>
     </div>
 
     <div class="notes">

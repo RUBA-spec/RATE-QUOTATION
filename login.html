@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            background: white;
+            padding: 30px;
+            border: 1px solid #ccc;
+            text-align: center;
+            width: 300px;
+        }
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 8px 20px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h3>Billing Login</h3>
+    <input type="password" id="password" placeholder="Enter password">
+    <br>
+    <button onclick="login()">Login</button>
+    <p class="error" id="error"></p>
+</div>
+
+<script>
+    const PASSWORD = "Bestyarn@123"; // 🔐 CHANGE THIS
+
+    function login() {
+        const entered = document.getElementById("password").value;
+        if (entered === PASSWORD) {
+            localStorage.setItem("auth", "true");
+            window.location.href = "index.html";
+        } else {
+            document.getElementById("error").innerText = "Wrong password";
+        }
+    }
+</script>
+
+</body>
+</html>
