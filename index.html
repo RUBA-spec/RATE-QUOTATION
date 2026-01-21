@@ -5,16 +5,16 @@
     <title>Rate Quotation</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <script>
-        if (localStorage.getItem("auth") !== "true") {
-            window.location.href = "login.html";
+        if (localStorage.getItem("loggedIn") !== "true") {
+          window.location.href = "./login.html";
         }
-    </script>
+        </script>
 <div class="bill">
 
     <h3 class="title">RATE QUOTATION</h3>
-
     <h1 class="company">BEST YARN DYEING</h1>
 
     <p class="address">
@@ -29,7 +29,6 @@
             <input type="text" id="customerName" placeholder="Customer Name"><br>
             <input type="text" placeholder="Place">
         </div>
-
         <div>
             <strong>Date:</strong> <span id="billDate"></span><br>
             <strong>No:</strong> <span id="billNo"></span>
@@ -69,13 +68,10 @@
     </table>
 
     <div class="controls">
-        <button onclick="addRow()">+ Add Item</button>
-        <button onclick="saveBill()">Save Bill</button>
-        <button onclick="window.print()">Print</button>
-        
-        
-        
-        
+        <button type="button" onclick="addRow()">+ Add Item</button>
+        <button type="button" onclick="window.print()">Print</button>
+        <button type="button" onclick="saveBill()">Save Bill</button>
+    
     </div>
 
     <div class="notes">
@@ -83,114 +79,15 @@
         <p>2. Yarn wastage will 5% to 6%</p>
     </div>
 
-    <div class="signature">
-        <p>For Best Yarn Dyeing</p><br><br>
-        <p>Authorised Signatory</p>
-    </div>
-
-</div>
-<script>
-    window.onload = function () {
-      var dateSpan = document.getElementById("billDate");
-      var noSpan = document.getElementById("billNo");
-  
-      if (!dateSpan || !noSpan) {
-        alert("billDate or billNo not found in HTML");
-        return;
-      }
-  
-      var now = new Date();
-      dateSpan.innerText = now.toLocaleDateString("en-GB");
-      noSpan.innerText = "QTN-" + now.getTime();
-    };
-  </script>
-
-</body>
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Rate Quotation</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="bill">
-
-    <h3 class="title">RATE QUOTATION</h3>
-
-    <h1 class="company">BEST YARN DYEING</h1>
-
-    <p class="address">
-        38/51, Uthukuli Road, Agni Motor (Opp)<br>
-        Palayakadu, Tirupur – 641607<br>
-        Phone: 0421-4340642, 9360730642, 9344944968
-    </p>
-
-    <div class="meta">
-        <div>
-            <strong>To M/s:</strong><br>
-            <input type="text" id="customerName" placeholder="Customer Name"><br>
-            <input type="text" placeholder="Place">
-        </div>
-
-        <div>
-            <strong>Date:</strong> <span id="billDate"></span><br>
-            <strong>No:</strong> <span id="billNo"></span>
-        </div>
-    </div>
-
-    <p class="intro">
-        Dear Sir,<br>
-        We have given the yarn dyeing rate quotation for your valuable order.
-    </p>
-
-    <table>
-        <thead>
-            <tr>
-                <th>S.No</th>
-                <th>Colour</th>
-                <th>Counts</th>
-                <th>Qty</th>
-                <th>Rate/kg</th>
-                <th>Party confirmed price</th>
-            </tr>
-        </thead>
-
-        <tbody id="billBody">
-            <tr>
-                <td>1</td>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="number" class="qty" oninput="calculateRow(this)"></td>
-                <td><input type="number" class="rate" oninput="calculateRow(this)"></td>
-                <td class="amount-cell">
-                    <span class="amount">0</span>
-                    <span class="row-delete" onclick="deleteRow(this)">✖</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="controls">
-        <button onclick="addRow()">+ Add Item</button>
-        <button onclick="saveBill()">Save Bill</button>
-        <button onclick="window.print()">Print</button>
-        <button onclick="showPreviousBills()">Previous Bills</button>
-    </div>
-
-    <div class="notes">
-        <p>1. For sampling charges the rate will be 22 kgs to 75 kgs ₹250/-</p>
-        <p>2. Yarn wastage will 5% to 6%</p>
-    </div>
-
-    <div class="signature">
-        <p>For Best Yarn Dyeing</p><br><br>
+    <!-- ✅ RIGHT SIDE SIGNATURE -->
+    <div class="signature-right">
+        <p>For Best Yarn Dyeing</p>
+        <br><br>
         <p>Authorised Signatory</p>
     </div>
 
 </div>
 
 <script src="app.js"></script>
-</body> -->
+</body>
 </html>
