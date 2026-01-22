@@ -24,14 +24,19 @@
     </p>
 
     <div class="meta">
-        <div>
+        <div class="left to-ms">
             <strong>To M/s:</strong><br>
-            <input type="text" id="customerName" placeholder="Customer Name"><br>
-            <input type="text" placeholder="Place">
+<div class="to-ms-fiels">
+            <!-- <input type="text" id="toName" placeholder="Customer Name"><br>
+            <input type="text" id="Place" placeholder="Place"> -->
+            <input type="text" data-order="1" placeholder="Customer Name">
+<input type="text" data-order="2" placeholder="Place">
         </div>
-        <div>
+    </div>
+        <div class="right">
             <strong>Date:</strong> <span id="billDate"></span><br>
-            <strong>No:</strong> <span id="billNo"></span>
+           <strong>No:</strong> <span id="billNo"></span>
+            
         </div>
     </div>
 
@@ -55,15 +60,23 @@
         <tbody id="billBody">
             <tr>
                 <td>1</td>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="number" class="qty" oninput="calculateRow(this)"></td>
-                <td><input type="number" class="rate" oninput="calculateRow(this)"></td>
+              
+                <!-- <td><input type="text" class="nav" data-next="counts"></td>
+              
+                <td><input type="text" class="nav" data-next="qty"></td>
+              
+                <td><input type="number" class="nav" data-next="rate"></td>
+              
+                <td><input type="number" class="nav" data-next="party"></td> -->
+                <td><input type="text" data-order="3"></td>   <!-- Colour / Counts -->
+                <td><input type="number" data-order="4"></td> <!-- Qty -->
+                <td><input type="number" data-order="5"></td> <!-- Rate -->
+                <td><input type="number" data-order="6"></td> <!-- Party price -->
                 <td class="amount-cell">
-                    <span class="amount">0</span>
-                    <span class="row-delete" onclick="deleteRow(this)">✖</span>
+                  <input type="number" class="nav party-price" data-next="colour">
+                  <span class="row-delete" onclick="deleteRow(this)">✖</span>
                 </td>
-            </tr>
+              </tr>
         </tbody>
     </table>
 
@@ -87,6 +100,26 @@
     </div>
 
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+      /* -------- DATE AUTO GENERATE -------- */
+      const today = new Date().toLocaleDateString("en-GB");
+      document.getElementById("billDate").innerText = today;
+    
+      /* -------- BILL NO AUTO GENERATE (150 SERIES) -------- */
+      let lastBillNo = localStorage.getItem("billNo");
+    
+      if (!lastBillNo) {
+        lastBillNo = 149; // so first bill will be 150
+      }
+    
+      const newBillNo = Number(lastBillNo) + 1;
+      document.getElementById("billNo").innerText = newBillNo;
+      localStorage.setItem("billNo", newBillNo);
+    
+    });
+    </script>
 
 <script src="app.js"></script>
 </body>

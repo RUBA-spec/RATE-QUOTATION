@@ -2,12 +2,18 @@
 if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "login.html";
 }
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("billDate").innerText =
-        new Date().toLocaleDateString("en-GB");
-    document.getElementById("billNo").innerText =
-        "QTN-" + Date.now();
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     document.getElementById("billDate").innerText =
+//         new Date().toLocaleDateString("en-GB");
+//     document.getElementById("billNo").innerText =
+//        "QTN-" + Date.now();
+//        let lastBill = localStorage.getItem("billNo");
+// if (!lastBill) lastBill = 149;
+
+// const newBillNo = Number(lastBill) + 1;
+// document.getElementById("billNo").innerText = newBillNo;
+// localStorage.setItem("billNo", newBillNo);
+// });
 
 function addRow() {
     const tbody = document.getElementById("billBody");
@@ -18,23 +24,23 @@ function addRow() {
         <td>${rowCount}</td>
         <td><input type="text"></td>
         <td><input type="text"></td>
-        <td><input type="number" class="qty" oninput="calculateRow(this)"></td>
-        <td><input type="number" class="rate" oninput="calculateRow(this)"></td>
+        <td><input type="number" class="qty" ></td>
+        <td><input type="number" class="rate" ></td>
         <td class="amount-cell">
-            <span class="amount">0</span>
+            <input type="number" placeholder="" />
             <span class="row-delete" onclick="deleteRow(this)">✖</span>
         </td>
     `;
     tbody.appendChild(row);
 }
 
-function calculateRow(input) {
-    const row = input.closest("tr");
-    const qty = Number(row.querySelector(".qty").value || 0);
-    const rate = Number(row.querySelector(".rate").value || 0);
-    const amount=qty*rate;
-    row.querySelector(".amount").innerText = qty * rate;
-}
+// function calculateRow(input) {
+//     const row = input.closest("tr");
+//     const qty = Number(row.querySelector(".qty").value || 0);
+//     const rate = Number(row.querySelector(".rate").value || 0);
+//     const amount=qty*rate;
+//     row.querySelector(".amount").innerText = qty * rate;
+// }
 
 function deleteRow(el) {
     el.closest("tr").remove();
@@ -75,3 +81,61 @@ function saveBill() {
 }
 
 /* 📜 VIEW PREVIOUS BILLS */
+// document.addEventListener("keydown", function (e) {
+//     if (e.key !== "Enter") return;
+  
+//     const el = e.target;
+//     e.preventDefault();
+  
+//     // TO → PLACE
+//     if (el.id === "toName") {
+//       document.getElementById("place")?.focus();
+//       return;
+//     }
+  
+//     // PLACE → FIRST ROW COUNTS
+//     if (el.id === "place") {
+//       document.querySelector(".counts")?.focus();
+//       return;
+//     }
+  
+//     const row = el.closest("tr");
+//     if (!row) return;
+  
+//     // COUNTS → QTY
+//     if (el.classList.contains("counts")) {
+//       row.querySelector(".qty")?.focus();
+//       return;
+//     }
+  
+//     // QTY → RATE
+//     if (el.classList.contains("qty")) {
+//       row.querySelector(".rate")?.focus();
+//       return;
+//     }
+  
+//     // RATE → NEXT ROW COUNTS
+//     if (el.classList.contains("rate")) {
+//       calculateRow(el);
+  
+//       const nextRow = row.nextElementSibling;
+//       if (nextRow) {
+//         nextRow.querySelector(".counts")?.focus();
+//       }
+//     }
+//   });
+document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter") return;
+  
+    e.preventDefault();
+  
+    const current = document.activeElement;
+    if (!current || !current.dataset.order) return;
+  
+    const currentOrder = Number(current.dataset.order);
+    const next = document.querySelector(`[data-order="${currentOrder + 1}"]`);
+  
+    if (next) {
+      next.focus();
+    }
+  });

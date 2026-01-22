@@ -87,3 +87,41 @@ tr:hover .row-delete {
         display: none;
     }
 }
+/* .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 10px;
+  }
+  
+  .meta .left {
+    text-align: left;
+    width: 55%;        /* 🔴 IMPORTANT */
+    /* padding-left: 5px; /* konjam left gap */
+  /* }
+  
+  .meta .right {
+    text-align: right;
+    width: 40%;
+  } */ */ */
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .to-ms {
+    width: 30%;
+    text-align: left;
+  }
+  
+  .to-ms-fields {
+    margin-top: 6px;
+  }
+  
+  .to-ms-fields input {
+    display: block;        /* 🔴 KEY FIX */
+    width: 20%;
+    margin: 4px 0;
+  }
