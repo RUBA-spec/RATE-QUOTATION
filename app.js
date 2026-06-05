@@ -1,4 +1,11 @@
 // 🔐 LOGIN CHECK
+const supabaseUrl = "https://iyvzahxlzqxhstylhquk.supabase.co";
+const supabaseKey = "sb_publishable_IcGDGmPNTr-6RCeZ2owcEg_sBI-qNZs";
+
+const supabaseClient = supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
 if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "login.html";
 }
@@ -54,30 +61,41 @@ function updateSerialNumbers() {
 }
 
 /* 💾 STORAGE LOGIC */
-function saveBill() {
-    const billNo = document.getElementById("billNo").innerText;
-    const customer = document.getElementById("customerName").value || "Customer";
-    const date = document.getElementById("billDate").innerText;
+async function saveBill() {
 
     const items = [];
+
     document.querySelectorAll("#billBody tr").forEach(row => {
-        const inputs = row.querySelectorAll("input");
+
         items.push({
-            colour: inputs[0].value,
-            counts: inputs[1].value,
-            qty: inputs[2].value,
-            rate: inputs[3].value,
-            amount: row.querySelector(".amount").innerText
+            colour: row.cells[1].querySelector("input")?.value || "",
+            counts: row.cells[2].querySelector("input")?.value || "",
+            qty: row.cells[3].querySelector("input")?.value || "",
+            rate: row.cells[4].querySelector("input")?.value || "",
+            partyPrice: row.cells[5].querySelector("input")?.value || ""
         });
+
     });
 
-    const bill = { billNo, customer, date, items };
+    const billData = {
+        bill_no: document.getElementById("billNo").innerText,
+        bill_date: document.getElementById("billDate").innerText,
+        customer_name: document.querySelector('[data-order="1"]').value,
+        place: document.querySelector('[data-order="2"]').value,
+        items: JSON.stringify(items)
+    };
 
-    let bills = JSON.parse(localStorage.getItem("bills")) || [];
-    bills.push(bill);
-    localStorage.setItem("bills", JSON.stringify(bills));
+    const { error } = await supabaseClient
+        .from("bills")
+        .insert([billData]);
 
-    alert("Bill saved successfully!");
+    if (error) {
+        console.error(error);
+        alert("Save Failed");
+        return;
+    }
+
+    alert("Bill Saved Successfully!");
 }
 
 /* 📜 VIEW PREVIOUS BILLS */
@@ -139,3 +157,92 @@ document.addEventListener("keydown", function (e) {
       next.focus();
     }
   });
+  async function showHistory() {
+
+    const { data, error } = await supabaseClient
+        .from("bills")
+        .select("*")
+        .order("id", { ascending: false });
+
+    if (error) {
+        console.error(error);
+        alert("Error loading bills");
+        return;
+    }
+
+    const tbody = document.getElementById("historyBody");
+
+    tbody.innerHTML = "";
+
+    if (!data || data.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5">No Bills Found</td>
+            </tr>
+        `;
+    } else {
+
+        data.forEach(bill => {
+
+            tbody.innerHTML += `
+                <tr>
+                    <td>${bill.bill_no}</td>
+                    <td>${bill.bill_date}</td>
+                    <td>${bill.customer_name}</td>
+                    <td>${bill.place || "-"}</td>
+                    <td>
+                        <button onclick="viewBill(${bill.id})">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+    }
+
+    document.getElementById("historySection").style.display = "block";
+}
+function closeHistory() {
+    document.getElementById("historySection").style.display = "none";
+}
+async function viewBill(id) {
+
+    const { data, error } = await supabaseClient
+        .from("bills")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        console.error(error);
+        alert("Bill not found");
+        return;
+    }
+
+    const items = JSON.parse(data.items);
+
+    let details = `
+Bill No: ${data.bill_no}
+
+Customer: ${data.customer_name}
+
+Place: ${data.place}
+
+Date: ${data.bill_date}
+
+`;
+
+    items.forEach(item => {
+        details += `
+Colour: ${item.colour}
+Counts: ${item.counts}
+Qty: ${item.qty}
+Rate: ${item.rate}
+Party Price: ${item.partyPrice}
+
+`;
+    });
+
+    alert(details);
+}

@@ -29,8 +29,9 @@
 <div class="to-ms-fiels">
             <!-- <input type="text" id="toName" placeholder="Customer Name"><br>
             <input type="text" id="Place" placeholder="Place"> -->
-            <input type="text" data-order="1" placeholder="Customer Name">
-<input type="text" data-order="2" placeholder="Place">
+            <input type="text" id="customerName" data-order="1" placeholder="Customer Name">
+
+<input type="text" id="place" data-order="2" placeholder="Place">
         </div>
     </div>
         <div class="right">
@@ -84,7 +85,28 @@
         <button type="button" onclick="addRow()">+ Add Item</button>
         <button type="button" onclick="window.print()">Print</button>
         <button type="button" onclick="saveBill()">Save Bill</button>
+        <button onclick="showHistory()">View Previous Bills</button>
+        <!-- <button onclick="window.location.href='history.html'">
+            View Previous Bills
+            </button> -->
+    </div>
+    <div id="historySection" style="display:none; margin-top:20px;">
+        <h3>Previous Bills</h3>
     
+        <table border="1" width="100%">
+            <thead>
+                <tr>
+                    <th>Bill No</th>
+                    <th>Date</th>
+                    <th>Customer Name</th>
+                    <th>Place</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+        </table>
+    
+        <button onclick="closeHistory()">Close</button>
     </div>
 
     <div class="notes">
@@ -121,6 +143,8 @@
     });
     </script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="app.js"></script>
 </body>
 </html>
